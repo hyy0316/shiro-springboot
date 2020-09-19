@@ -10,9 +10,12 @@
 </head>
 <body>
     <h1>登录 </h1>
-    <span>用户名：</span><input type="text" value="" ><br/>
-    <span>密码：</span><input type="password" value="" ><br/>
+    <form action="${pageContext.request.contextPath}/user/login" method="post">
+        <span>用户名：</span><input type="text" name="userName" value="" ><br/>
+        <span>密码：</span><input type="text" name="password" value="" ><br/>
+       <input type="submit" value="登录">
 
-<button>登录</button>
+    </form>
+
 </body>
 </html>

@@ -28,13 +28,11 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //给filter设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-
         //配置系统的受限资源
         //配置系统的公共资源
         HashMap<String, String> map = new HashMap<>();
         //authc 表示的是受限资源 ，请求这个资源需要认证和授权
         map.put("/index.jsp","authc");
-//        map.put("index.jsp","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
 

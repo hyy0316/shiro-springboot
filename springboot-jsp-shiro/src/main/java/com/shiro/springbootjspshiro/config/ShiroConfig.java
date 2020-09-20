@@ -2,6 +2,7 @@ package com.shiro.springbootjspshiro.config;
 
 
 import com.shiro.springbootjspshiro.shiro.realms.CustomerRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -41,6 +42,8 @@ public class ShiroConfig {
          *  @date: 2020/09/20
          */
         map.put("/user/login","anon");
+        map.put("/user/register","anon");
+        map.put("/register.jsp","anon");
         map.put("/**","authc");
 //        shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
@@ -71,6 +74,18 @@ public class ShiroConfig {
     @Bean
     public Realm getRealm(){
         CustomerRealm customerRealm  = new CustomerRealm();
+        /**
+         *  @description: 修改凭证校验匹配器
+         *  @author: yyhuang
+         *  @date: 2020/09/20 
+         */
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        //设置加密算法为md5
+        credentialsMatcher.setHashAlgorithmName("Md5");
+        //设置散列次数
+        credentialsMatcher.setHashIterations(1024);
+        customerRealm.setCredentialsMatcher(credentialsMatcher);
+
         return customerRealm;
     }
 

@@ -2,6 +2,7 @@ package com.shiro.springbootjspshiro.config;
 
 
 import com.shiro.springbootjspshiro.shiro.realms.CustomerRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -31,8 +32,20 @@ public class ShiroConfig {
         //配置系统的受限资源
         //配置系统的公共资源
         HashMap<String, String> map = new HashMap<>();
-        //authc 表示的是受限资源 ，请求这个资源需要认证和授权
-        map.put("/index.jsp","authc");
+        /**
+         *  @description: authc 表示的是受限资源 ，请求这个资源需要认证和授权
+         *  anon 表示的是公共资源，不受限制的都可以请求这个资源 并且anon 需要在最前面，
+         *  即 公共资源的设置需要在受限资源前面设置
+         *
+         *  另公共资源也可以在配置文件中设置白名单
+         *  @author: yyhuang
+         *  @date: 2020/09/20
+         */
+        map.put("/user/login","anon");
+        map.put("/user/register","anon");
+        map.put("/register.jsp","anon");
+        map.put("/**","authc");
+//        shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
 
@@ -61,6 +74,18 @@ public class ShiroConfig {
     @Bean
     public Realm getRealm(){
         CustomerRealm customerRealm  = new CustomerRealm();
+        /**
+         *  @description: 修改凭证校验匹配器
+         *  @author: yyhuang
+         *  @date: 2020/09/20 
+         */
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        //设置加密算法为md5
+        credentialsMatcher.setHashAlgorithmName("Md5");
+        //设置散列次数
+        credentialsMatcher.setHashIterations(1024);
+        customerRealm.setCredentialsMatcher(credentialsMatcher);
+
         return customerRealm;
     }
 

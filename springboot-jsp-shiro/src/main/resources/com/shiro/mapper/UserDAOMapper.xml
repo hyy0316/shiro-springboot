@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.springbootjspshiro.dao.UserDAO">
+
+    <insert id="save" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+        insert into t_user values(#{id},#{username},#{password},#{salt})
+    </insert>
+
+    <select id="findByusername" parameterType="String" resultType="User">
+        select id,username,password,salt from t_user where username = #{username}
+    </select>
+</mapper>

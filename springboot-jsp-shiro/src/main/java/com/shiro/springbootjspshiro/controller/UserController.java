@@ -44,4 +44,17 @@ public class UserController {
 
         return  "redirect:/login.jsp";
     }
+
+    /**
+     *  @description: 退出登录
+     *  @author: yyhuang
+     *  @date: 2020/09/20 
+     */
+    @RequestMapping("logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/login.jsp";
+    }
+
 }

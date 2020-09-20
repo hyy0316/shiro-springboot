@@ -31,8 +31,18 @@ public class ShiroConfig {
         //配置系统的受限资源
         //配置系统的公共资源
         HashMap<String, String> map = new HashMap<>();
-        //authc 表示的是受限资源 ，请求这个资源需要认证和授权
-        map.put("/index.jsp","authc");
+        /**
+         *  @description: authc 表示的是受限资源 ，请求这个资源需要认证和授权
+         *  anon 表示的是公共资源，不受限制的都可以请求这个资源 并且anon 需要在最前面，
+         *  即 公共资源的设置需要在受限资源前面设置
+         *
+         *  另公共资源也可以在配置文件中设置白名单
+         *  @author: yyhuang
+         *  @date: 2020/09/20
+         */
+        map.put("/user/login","anon");
+        map.put("/**","authc");
+//        shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
 
